@@ -72,17 +72,18 @@ exports.deleteTask = async (req, res) => {
 
 // 5. Tüm Günlük Görevleri Sıfırla (Toplu Güncelleme)
 exports.resetDailyTasks = async (req, res) => {
-    const { userId } = req.body;
-
     try {
-        // user_id'si uyuşan VE task_type'ı 'daily' olan tüm görevlerin is_completed değerini 0 (false) yap
-        await db.execute(
-            'UPDATE tasks SET is_completed = 0 WHERE user_id = ? AND task_type = "daily"',
-            [userId]
+        const userId = req.body.userId; // authMiddleware'den gelen güvenli ID
+
+        // "daily" kelimesini de soru işareti (?) ile güvenli parametre olarak gönderiyoruz
+        const [result] = await db.execute(
+            'UPDATE tasks SET is_completed = false WHERE user_id = ? AND task_type = ?',
+            [userId, 'daily']
         );
+
         res.status(200).json({ message: 'Günlük görevler başarıyla sıfırlandı.' });
-    } catch (error) {
-        console.error('Sıfırlama hatası:', error);
-        res.status(500).json({ message: 'Görevler sıfırlanırken sunucu hatası oluştu.' });
+    } catch (err) {
+        console.error('Sıfırlama hatası:', err);
+        res.status(500).json({ message: 'Sıfırlama sırasında bir hata oluştu.' });
     }
 };
