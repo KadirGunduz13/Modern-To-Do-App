@@ -254,7 +254,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentUser) return;
         
         try {
-            const response = await fetch(`/api/tasks/${currentUser.id}`);
+            const response = await fetch(`/api/tasks/${currentUser.id}`, {
+                method: 'GET', // (GET varsayılan olduğu için yazmasan da olur ama headers şart)
+                headers: getAuthHeaders() // İŞTE BİZİM KİMLİK KARTIMIZ!
+            });
             const tasks = await response.json();
             
             dailyTaskList.innerHTML = '';
