@@ -59,14 +59,14 @@ exports.login = async (req, res) => {
 
         // Şifre doğruysa, kırılamaz bir JWT token (kimlik kartı) oluştur
         const token = jwt.sign(
-            { id: user[0].id, username: user[0].username }, 
+            { id: user.id, username: user.username }, // [0] ları sildik!
             process.env.JWT_SECRET, 
             { expiresIn: '24h' }
         );
 
         res.status(200).json({ 
             message: 'Giriş başarılı!', 
-            user: { id: user[0].id, username: user[0].username },
+            user: { id: user.id, username: user.username }, // Burada da [0] ları sildik!
             token: token // Token'ı frontend'e gönderiyoruz
         });
     } catch (error) {
