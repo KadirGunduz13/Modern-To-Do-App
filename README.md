@@ -2,7 +2,7 @@
 
 TaskMaster is a modern, full-stack web application that allows users to organize their daily and long-term goals. It features dynamic progress tracking, gamification elements (confetti animations), and robust backend security protocols.
 
-![TaskMaster Screenshot](https://hizliresim.com/azqdgks)
+![TaskMaster Screenshot](https://i.hizliresim.com/azqdgks.png)
 
 🚀 **Live Demo:** [Check out TaskMaster](https://taskmaster-xuo5.onrender.com)
 
