@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const taskController = require('../controllers/taskController');
+const { verifyToken } = require('../middleware/authMiddleware'); // Duvarı çağırdık
 
-router.get('/:userId', taskController.getTasks);
-router.post('/', taskController.createTask);
-
-// DİKKAT: Bu reset rotası, aşağıdaki :id içeren rotalardan ÖNCE gelmeli!
-router.put('/reset/daily', taskController.resetDailyTasks);
-
-router.put('/:id/status', taskController.updateTaskStatus);
-router.delete('/:id', taskController.deleteTask);
+// Tüm görev rotalarının önüne 'verifyToken' duvarını ekliyoruz!
+router.get('/:userId', verifyToken, taskController.getTasks);
+router.post('/', verifyToken, taskController.createTask);
+router.put('/reset/daily', verifyToken, taskController.resetDailyTasks);
+router.put('/:id/status', verifyToken, taskController.updateTaskStatus);
+router.delete('/:id', verifyToken, taskController.deleteTask);
 
 module.exports = router;

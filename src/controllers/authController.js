@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
+const jwt = require('jsonwebtoken');
 
 // Kayıt Olma İşlemi
 exports.register = async (req, res) => {
@@ -53,13 +54,20 @@ exports.login = async (req, res) => {
         // 2. Şifreyi doğrula
         const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) {
-            return res.status(401).json({ message: 'Kullanıcı adı veya şifre hatalı.' });
+            return res.status(401).json({ message: 'Geçersiz şifre.' });
         }
 
-        // 3. Başarılı giriş (Şimdilik id ve username dönüyoruz, ileride buraya JWT eklenebilir)
+        // Şifre doğruysa, kırılamaz bir JWT token (kimlik kartı) oluştur
+        const token = jwt.sign(
+            { id: user[0].id, username: user[0].username }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '24h' }
+        );
+
         res.status(200).json({ 
             message: 'Giriş başarılı!', 
-            user: { id: user.id, username: user.username } 
+            user: { id: user[0].id, username: user[0].username },
+            token: token // Token'ı frontend'e gönderiyoruz
         });
     } catch (error) {
         console.error('Giriş hatası:', error);

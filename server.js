@@ -4,12 +4,23 @@ const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
 const db = require('./src/config/db');
+const rateLimit = require('express-rate-limit');
 
 // .env dosyasındaki değişkenleri okumak için
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Saniyede binlerce istek atarak şifre kırmaya çalışan botları engelliyoruz
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 dakika
+    max: 20, // 15 dakika içinde aynı IP'den en fazla 20 deneme
+    message: { message: 'Çok fazla giriş denemesi yaptınız. Lütfen 15 dakika sonra tekrar deneyin.' }
+});
+
+// Bu korumayı sadece Auth (Giriş/Kayıt) rotalarına uyguluyoruz
+app.use('/api/auth', authLimiter);
 
 // Güvenlik ve Ayar Katmanları (Middlewares)
 // Güvenlik ve Ayar Katmanları
@@ -27,6 +38,8 @@ app.use(helmet({
         }
     }
 }));
+
+
 app.use(cors()); // Farklı kaynaklardan gelen isteklere izin/kısıtlama
 app.use(express.json()); // Gelen JSON verilerini okuyabilmek için
 app.use(express.urlencoded({ extended: true })); // Form verilerini okumak için

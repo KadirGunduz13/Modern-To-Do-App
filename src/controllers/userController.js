@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const db = require('../config/db');
 
+
 exports.updateProfile = async (req, res) => {
     const userId = req.params.id;
     const { newUsername, newPassword } = req.body;

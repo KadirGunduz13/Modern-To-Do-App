@@ -62,6 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }).showToast();
     }
 
+    // Tüm Fetch isteklerine otomatik Token ekleyen yardımcı fonksiyon
+    function getAuthHeaders() {
+        const token = localStorage.getItem('token');
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Güvenlik kartımızı gösteriyoruz
+        };
+    }
+
     // --- Görev Tipi Değiştikçe Formu Ayarla ---
     taskTypeSelect.addEventListener('change', (e) => {
         if (e.target.value === 'long_term') {
@@ -143,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(endpoint, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify({ username, password })
             });
             const data = await response.json();
@@ -152,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (isLoginMode) {
                     currentUser = data.user;
                     localStorage.setItem('user', JSON.stringify(currentUser));
+                    localStorage.setItem('token', data.token); // TOKEN'I KAYDET
                     showAppView(currentUser.username); 
                     loadTasks(); 
                     showToast(`Hoş geldin, ${currentUser.username}!`, 'success');
@@ -177,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault(); 
         
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         currentUser = null;
         showAuthView(); 
         
@@ -211,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(`/api/users/${currentUser.id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify({ 
                     newUsername: newUsername !== currentUser.username ? newUsername : null, 
                     newPassword: newPassword ? newPassword : null 
@@ -270,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('/api/tasks', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: getAuthHeaders(),
                 body: JSON.stringify({ title, task_type, userId: currentUser.id, due_date: taskDueDate.value || null })
             });
             
@@ -334,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await fetch(`/api/tasks/${taskId}/status`, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify({ is_completed: completed, userId: currentUser.id })
                 });
 
@@ -350,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const response = await fetch(`/api/tasks/${taskId}`, {
                     method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify({ userId: currentUser.id })
                 });
 
@@ -375,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Backend API'sine istek atıyoruz
                 const response = await fetch('/api/tasks/reset/daily', {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify({ userId: currentUser.id })
                 });
 
