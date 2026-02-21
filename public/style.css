@@ -1,0 +1,220 @@
+/* Sadece Aydınlık Modda geçerli olacak arka plan */
+[data-bs-theme="light"] body {
+    background-color: #f4f7f6 !important;
+}
+
+/* Navbar - Aydınlık Mod (Mavi) */
+[data-bs-theme="light"] .navbar {
+    background-color: #0d6efd !important;
+}
+
+/* Navbar - Karanlık Mod (Turuncu) */
+[data-bs-theme="dark"] .navbar {
+    background-color: #fd7e14 !important;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Renk geçişini yumuşatır */
+}
+
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.list-group-item {
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+/* Görev tamamlandığında üstünü çizme efekti */
+.task-completed {
+    text-decoration: line-through;
+    color: #adb5bd;
+}
+
+/* Checkbox tasarımı */
+.form-check-input {
+    width: 1.5em;
+    height: 1.5em;
+    cursor: pointer;
+}
+
+/* --- PROFİL BUTONU (Her iki temaya uyumlu yarı şeffaf yapı) --- */
+.btn-profile {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-profile:hover, .btn-profile:focus {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    color: white !important;
+}
+
+/* --- KARANLIK MOD KONTRAST VE ÇERÇEVE AYARLARI --- */
+[data-bs-theme="dark"] body {
+    background-color: #121212 !important; /* Sayfa zeminini daha da koyulaştırıyoruz */
+}
+
+[data-bs-theme="dark"] .card {
+    background-color: #1e1e1e !important; /* Kartları arka plandan ayırmak için rengini açıyoruz */
+    border: 1px solid #3a3a3a !important; /* Kartların sınırlarını belirginleştiren çerçeve */
+}
+
+/* Karanlık modda liste elemanlarının (görevlerin) arasına da hafif bir çizgi atalım */
+[data-bs-theme="dark"] .list-group-item {
+    background-color: transparent !important;
+    border-bottom: 1px solid #3a3a3a !important;
+}
+
+[data-bs-theme="dark"] .list-group-item:last-child {
+    border-bottom: none !important;
+}
+
+/* --- DİNAMİK BUTON (Ekle Butonu) --- */
+/* Aydınlık Mod (Mavi) */
+[data-bs-theme="light"] .btn-theme {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: white !important;
+}
+[data-bs-theme="light"] .btn-theme:hover {
+    background-color: #0b5ed7 !important;
+}
+
+/* Karanlık Mod (Turuncu) */
+[data-bs-theme="dark"] .btn-theme {
+    background-color: #fd7e14 !important;
+    border-color: #fd7e14 !important;
+    color: white !important;
+}
+[data-bs-theme="dark"] .btn-theme:hover {
+    background-color: #e37112 !important; /* Üzerine gelince biraz daha koyu turuncu */
+}
+
+/* --- AÇILIR MENÜ (DROPDOWN) TIKLANMA DÜZELTMELERİ --- */
+
+/* Tıklanma (active) anındaki mavi arkaplanı kaldırıyoruz */
+.dropdown-item:active {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+/* Karanlık modda açılır menü elemanlarının üzerine gelince (hover) sırıtmayan hafif bir vurgu */
+[data-bs-theme="dark"] .dropdown-item:hover,
+[data-bs-theme="dark"] .dropdown-item:focus {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+/* --- KARANLIK MOD FORM VE PLACEHOLDER GÜNCELLEMELERİ --- */
+[data-bs-theme="dark"] .bg-light {
+    background-color: #2b2b2b !important;
+    color: white !important;
+}
+
+/* Placeholder (Silik yazı) rengini karanlık modda okunabilir yapma */
+[data-bs-theme="dark"] .form-control::placeholder {
+    color: #9ca3af !important; 
+    opacity: 1;
+}
+
+/* Açılır liste (Select) için karanlık mod ayarları */
+[data-bs-theme="dark"] .form-select {
+    background-color: #2b2b2b !important;
+    color: white !important;
+    border-color: #3a3a3a !important;
+}
+
+[data-bs-theme="dark"] .form-select option {
+    background-color: #2b2b2b;
+    color: white;
+}
+
+/* --- FOOTER DİNAMİK TEMA AYARLARI --- */
+
+/* Karanlık modda üst çizgiyi (border-top) koyulaştırıyoruz */
+[data-bs-theme="dark"] .theme-footer.border-top {
+    border-color: #3a3a3a !important;
+}
+
+/* Karanlık modda 'text-muted' sınıfının rengini daha şık bir gri yapıyoruz */
+[data-bs-theme="dark"] .theme-footer .text-muted {
+    color: #8c929b !important;
+}
+
+/* --- SOSYAL MEDYA İKONLARI VE EFEKTLERİ --- */
+.social-icon {
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: inline-block;
+}
+
+/* Üzerine gelince hafif yukarı kalkma efekti */
+.social-icon:hover {
+    transform: translateY(-3px);
+}
+
+/* Aydınlık Mod Marka Renkleri */
+[data-bs-theme="light"] .social-icon:hover .bi-linkedin { color: #0a66c2 !important; }
+[data-bs-theme="light"] .social-icon:hover .bi-github { color: #171515 !important; }
+[data-bs-theme="light"] .social-icon:hover .bi-instagram { color: #e1306c !important; }
+
+/* Karanlık Mod Marka Renkleri ve İkon Uyumu */
+[data-bs-theme="dark"] .social-icon {
+    color: #8c929b !important; /* Koyu temaya uygun gri ikonlar */
+}
+[data-bs-theme="dark"] .social-icon:hover .bi-linkedin { color: #0a66c2 !important; }
+[data-bs-theme="dark"] .social-icon:hover .bi-github { color: #ffffff !important; } /* Github karanlıkta beyaz parlasın */
+[data-bs-theme="dark"] .social-icon:hover .bi-instagram { color: #e1306c !important; }
+
+/* --- GİRİŞ EKRANI (AUTH SECTION) AYDINLIK MOD ARKA PLANI --- */
+[data-bs-theme="light"] #authSection {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%) !important;
+}
+
+/* Giriş kartının aydınlık modda daha çok öne çıkması (havada durması) için ekstra gölge */
+[data-bs-theme="light"] #authSection .card {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Karanlık modda tarih seçicinin takvim ikonunu okunabilir yapma */
+[data-bs-theme="dark"] input[type="date"] {
+    color-scheme: dark;
+}
+
+/* --- GÜNLÜK GÖREV SIFIRLAMA BUTONU ANİMASYONU --- */
+.theme-reset-btn {
+    background-color: rgba(108, 117, 125, 0.05);
+    transition: all 0.3s ease;
+}
+
+.theme-reset-btn i {
+    display: inline-block;
+    transition: transform 0.4s ease;
+}
+
+.theme-reset-btn:hover i {
+    transform: rotate(180deg); /* Üzerine gelince ok ikonu döner */
+}
+
+/* Karanlık Modda İkon Rengi */
+[data-bs-theme="dark"] .theme-reset-btn {
+    color: #8c929b !important;
+}
+[data-bs-theme="dark"] .theme-reset-btn:hover {
+    color: #ffffff !important;
+}

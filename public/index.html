@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster</title> <link rel="icon" type="image/jpg" href="favicon.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="authSection" class="min-vh-100 d-flex align-items-center justify-content-center position-relative">
+        <button class="btn btn-outline-secondary position-absolute top-0 end-0 m-4 rounded-circle theme-toggle-btn" style="width: 45px; height: 45px;">
+            <i class="bi bi-moon-stars fs-5"></i>
+        </button>
+        <div class="card shadow-lg border-0 rounded-4 w-100 mx-3" style="max-width: 450px;">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-primary mb-1"><i class="bi bi-check2-square"></i> TaskMaster</h2>
+                    <p class="text-muted" id="authSubtitle">Devam etmek için giriş yapın</p>
+                </div>
+                <form id="authForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label text-secondary fw-semibold">Kullanıcı Adı</label>
+                        <input type="text" class="form-control form-control-lg bg-light border-0" id="username" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label text-secondary fw-semibold">Şifre</label>
+                        <input type="password" class="form-control form-control-lg bg-light border-0" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-theme btn-lg w-100 fw-bold mb-3" id="loginSubmitBtn">Giriş Yap</button>
+                    <div class="text-center">
+                        <span class="text-muted">Hesabın yok mu?</span> 
+                        <a href="#" id="toggleAuthMode" class="text-decoration-none fw-bold">Kayıt Ol</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="position-absolute bottom-0 w-100 text-center py-3 theme-footer d-flex flex-column align-items-center">
+            <div class="d-flex gap-3 mb-2">
+                <a href="https://www.linkedin.com/in/kadir-gündüz-a50a67325" target="_blank" class="text-secondary social-icon"><i class="bi bi-linkedin fs-5"></i></a>
+                <a href="https://github.com/KadirGunduz13" target="_blank" class="text-secondary social-icon"><i class="bi bi-github fs-5"></i></a>
+                <a href="https://www.instagram.com/kadirr.gndz" target="_blank" class="text-secondary social-icon"><i class="bi bi-instagram fs-5"></i></a>
+            </div>
+            <small class="text-muted fw-semibold">Created by Kadir Gündüz © 2026</small>
+        </div>
+    </div>
+
+    <div id="appSection" class="d-none">
+        
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="#"><i class="bi bi-check2-square"></i> TaskMaster</a>
+
+        <div class="d-none d-md-flex flex-column align-items-center mx-auto text-white" style="width: 250px; opacity: 0.95;">
+            <div class="d-flex justify-content-between w-100 mb-1" style="font-size: 0.85rem;">
+                <span class="fw-medium"><i class="bi bi-bar-chart-fill me-1"></i> Günlük İlerleme</span>
+                <span id="progressText" class="fw-bold">0%</span>
+            </div>
+            <div class="progress w-100" style="height: 8px; background-color: rgba(255, 255, 255, 0.2);">
+                <div id="navProgressBar" class="progress-bar bg-white rounded-pill" role="progressbar" style="width: 0%; transition: width 0.5s ease;"></div>
+            </div>
+        </div>
+        
+        <div class="d-flex align-items-center gap-3">
+            
+            <button class="btn btn-profile border-0 shadow-none rounded-circle theme-toggle-btn" type="button" style="width: 42px; height: 42px;">
+                <i class="bi bi-moon-stars fs-5"></i>
+            </button>
+            
+            <div id="userInfo" class="dropdown">
+                <button class="btn btn-profile dropdown-toggle d-flex align-items-center gap-2 border-0 shadow-none px-3 py-2 rounded-pill" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span id="userNameDisplay" class="fw-bold"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-3" aria-labelledby="userDropdown">
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#" id="accountBtn">
+                            <i class="bi bi-person fs-5"></i> Hesap
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2 py-2 text-danger fw-bold" href="#" id="logoutBtn">
+                            <i class="bi bi-box-arrow-right fs-5"></i> Çıkış Yap
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+</nav>
+
+        <div class="container mt-5 pb-5">
+            <div class="card shadow-sm mb-5 border-0 rounded-4">
+                <div class="card-body p-4">
+                    <form id="taskForm" class="row g-3 align-items-center">
+                        <div class="col-md-7" id="titleCol">
+                            <input type="text" class="form-control form-control-lg border-0 bg-light" id="taskTitle" placeholder="Bugün ne başarmak istiyorsun?" required>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select form-select-lg border-0 bg-light" id="taskType">
+                                <option value="daily">Günlük Görev</option>
+                                <option value="long_term">Uzun Dönemli Görev</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-none" id="dateCol">
+                            <input type="date" class="form-control form-control-lg border-0 bg-light text-secondary" id="taskDueDate">
+                        </div>
+                        <div class="col-md-2" id="btnCol">
+                            <button type="submit" class="btn btn-theme btn-lg w-100 fw-bold"><i class="bi bi-plus-lg"></i> Ekle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-header bg-transparent border-0 pt-4 pb-2 d-flex justify-content-between align-items-center">
+                            <h4 class="text-primary fw-bold mb-0"><i class="bi bi-sun"></i> Günlük Görevler</h4>
+                            <button class="btn btn-sm text-secondary border-0 rounded-circle theme-reset-btn" id="resetDailyBtn" title="Günlük Görevleri Sıfırla" style="width: 35px; height: 35px;">
+                                <i class="bi bi-arrow-clockwise fs-5"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush" id="dailyTaskList"></ul>
+                            <div id="dailyEmptyState" class="text-center text-muted mt-4 mb-3">
+                                <i class="bi bi-inbox fs-1 opacity-50"></i>
+                                <p class="mt-2">Tüm günlük görevlerini bitirdin.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-header bg-transparent border-0 pt-4 pb-2">
+                            <h4 class="text-success fw-bold"><i class="bi bi-calendar-check"></i> Uzun Dönemli Görevler</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush" id="longTermTaskList"></ul>
+                            <div id="longTermEmptyState" class="text-center text-muted mt-4 mb-3">
+                                <i class="bi bi-flag fs-1 opacity-50"></i>
+                                <p class="mt-2">Uzun dönemli hedefin bulunmuyor.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="py-4 mt-5 border-top theme-footer text-center w-100 d-flex flex-column align-items-center">
+                <div class="d-flex gap-3 mb-2">
+                    <a href="https://www.linkedin.com/in/kadir-gündüz-a50a67325" target="_blank" class="text-secondary social-icon"><i class="bi bi-linkedin fs-5"></i></a>
+                    <a href="https://github.com/KadirGunduz13" target="_blank" class="text-secondary social-icon"><i class="bi bi-github fs-5"></i></a>
+                    <a href="https://www.instagram.com/kadirr.gndz" target="_blank" class="text-secondary social-icon"><i class="bi bi-instagram fs-5"></i></a>
+                </div>
+                <small class="text-muted fw-semibold">Created by Kadir Gündüz © 2026</small>
+            </footer>
+        </div>
+    </div>
+
+    <div class="modal fade" id="accountModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow-lg" data-bs-theme="light">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-person-lines-fill text-primary me-2"></i> Hesap Ayarları</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="accountForm">
+                        <div class="mb-3">
+                            <label class="form-label text-secondary fw-semibold">Yeni Kullanıcı Adı</label>
+                            <input type="text" class="form-control form-control-lg bg-light border-0" id="updateUsername" placeholder="Değiştirmek istemiyorsanız aynı bırakın">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label text-secondary fw-semibold">Yeni Şifre</label>
+                            <input type="password" class="form-control form-control-lg bg-light border-0" id="updatePassword" placeholder="Değiştirmek istemiyorsanız boş bırakın">
+                        </div>
+                        <button type="submit" class="btn btn-theme btn-lg w-100 fw-bold">Değişiklikleri Kaydet</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
