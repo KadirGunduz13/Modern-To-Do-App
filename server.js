@@ -14,16 +14,16 @@ const PORT = process.env.PORT || 3000;
 // Güvenlik ve Ayar Katmanları (Middlewares)
 // Güvenlik ve Ayar Katmanları
 // --- GÜVENLİ HELMET (CSP) AYARLARI ---
+// --- GÜVENLİ HELMET (CSP) AYARLARI ---
 app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
-            // Bootstrap ve Toastify'ın CDN linklerine (cdn.jsdelivr.net) açıkça izin veriyoruz
             scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
             styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
-            // Resimler ve ikonlar için izinler
             imgSrc: ["'self'", "data:", "blob:"],
-            connectSrc: ["'self'"]
+            // connectSrc alanına CDN linkini de ekledik ki .map dosyalarında hata vermesin
+            connectSrc: ["'self'", "https://cdn.jsdelivr.net"] 
         }
     }
 }));
